@@ -4939,6 +4939,33 @@ int whisper_full_n_segments(struct whisper_context * ctx) {
     return ctx->state->result_all.size();
 }
 
+int whisper_full_n_segments_no_punctuation(struct whisper_context * ctx) { // TODO: edge case: "country."
+    int n_segments = ctx->state->result_all.size();
+    for (int i = 0; i < ctx->state->result_all.size(); i++) {
+        const char* text = ctx->state->result_all[i].text.c_str();
+        bool has_punctuation = false;
+
+        for (int j = 0; j < strlen(text); j++) {
+            char c = text[j];
+            if (c == '.' || c == ',' || c == '?') { // country.
+                has_punctuation = true;
+                    if (j > 0 && j < strlen(text)){
+                        // check if the punctuation is not at the end of the sentence
+                        if (text[j+1] != ' '){
+                            has_punctuation = false;
+                        }
+                    }
+                break;
+            }
+        }
+
+        if (has_punctuation) {
+            n_segments--;
+        }
+    }
+    return n_segments;
+}
+
 int whisper_full_lang_id_from_state(struct whisper_state * state) {
     return state->lang_id;
 }

@@ -467,6 +467,7 @@ extern "C" {
 
     // Number of generated text segments
     // A segment can be a few words, a sentence, or even a paragraph.
+    WHISPER_API int whisper_full_n_segments_no_punctuation(struct whisper_context * ctx); // added
     WHISPER_API int whisper_full_n_segments           (struct whisper_context * ctx);
     WHISPER_API int whisper_full_n_segments_from_state(struct whisper_state * state);
 

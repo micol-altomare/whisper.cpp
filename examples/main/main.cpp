@@ -274,6 +274,23 @@ void whisper_print_segment_callback(struct whisper_context * ctx, struct whisper
     const auto & pcmf32s = *((whisper_print_user_data *) user_data)->pcmf32s;
 
     const int n_segments = whisper_full_n_segments(ctx);
+    const int n_segments_no_punctuation = whisper_full_n_segments_no_punctuation(ctx);
+    // print n_segments
+    printf("Number of words and panctuation in this audio = %d\n", n_segments);
+
+    // AT THE END OF THE TRANSCRIPT, GET THE AVERAGE NUMBER OF WORDS/MINUTE
+    float time = ((float)whisper_full_get_segment_t1(ctx, n_segments - 1) - (float)whisper_full_get_segment_t0(ctx, 0)) / 6000;
+    // Print n_segments
+    printf("Number of words in this audio = %d\n", n_segments_no_punctuation);
+    // Print the duration of the audio file, t1 - t0
+    printf("Duration of the audio file = %f\n", time);
+    // Print the number of words per minute
+    printf("Number of words per minute = %f\n", (float)n_segments_no_punctuation / time);
+
+
+    // Number of long pauses:
+    int long_pauses = 0;
+    // Long pause = when a word has a duration of more than xxx milliseconds according to how long it should actually take
 
     std::string speaker = "";
 
