@@ -4947,7 +4947,7 @@ int whisper_full_n_segments_no_punctuation(struct whisper_context * ctx) { // TO
 
         for (int j = 0; j < strlen(text); j++) {
             char c = text[j];
-            if (c == '.' || c == ',' || c == '?') { // country.
+            if (c == '.' || c == ',' || c == '?' || c == '!' || c == ';' || c == '[' || c == ']') { // country.
                 has_punctuation = true;
                     if (j > 0 && j < strlen(text)){
                         // check if the punctuation is not at the end of the sentence

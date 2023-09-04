@@ -274,9 +274,9 @@ void whisper_print_segment_callback(struct whisper_context * ctx, struct whisper
     const auto & pcmf32s = *((whisper_print_user_data *) user_data)->pcmf32s;
 
     const int n_segments = whisper_full_n_segments(ctx);
-    const int n_segments_no_punctuation = whisper_full_n_segments_no_punctuation(ctx);
-    // print n_segments
-    printf("Number of words and panctuation in this audio = %d\n", n_segments);
+    const int n_segments_no_punctuation = whisper_full_n_segments_no_punctuation(ctx) - 1;
+
+    printf("Number of words and punctuation in this audio = %d\n", n_segments);
 
     // AT THE END OF THE TRANSCRIPT, GET THE AVERAGE NUMBER OF WORDS/MINUTE
     float time = ((float)whisper_full_get_segment_t1(ctx, n_segments - 1) - (float)whisper_full_get_segment_t0(ctx, 0)) / 6000;
